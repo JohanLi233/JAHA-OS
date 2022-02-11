@@ -1,4 +1,5 @@
-  [org 0x7c00]
+  mov ax, 0x07c0
+  mov ds, ax
 
   ;; 设置屏幕为文本模式并且清除屏幕
   mov ax, 3
