@@ -11,6 +11,9 @@
   mov ss, ax
   mov sp, 0x7c00
 
+  kernel_position equ 0x1314
+  kernel_start equ 0x1316
+
   mov si, booting_message
   call print
 
@@ -20,10 +23,10 @@
 
   call read_disk
 
-  cmp word [0x1314], 0x55aa
+  cmp word [kernel_position], 0x55aa
   jnz error
 
-  jmp 0:0x1316
+  jmp 0:kernel_start
 
   ;; 阻塞
   jmp $
