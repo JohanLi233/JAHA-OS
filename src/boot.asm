@@ -1,5 +1,4 @@
-  mov ax, 0x07c0
-  mov ds, ax
+  [org 0x7c00]
 
   ;; 设置屏幕为文本模式并且清除屏幕
   mov ax, 3
@@ -12,24 +11,24 @@
   mov ss, ax
   mov sp, 0x7c00
 
-  ;; 0xb800 文本显示器内存区域
-  mov ax, 0xb800
-  mov ds, ax
-  mov byte[0], 'T'
-  mov byte[2], 'o'
-  mov byte[4], ' '
-  mov byte[6], 'm'
-  mov byte[8], 'y '
-  mov byte[10], ' '
-  mov byte[12], 'l'
-  mov byte[14], 'o'
-  mov byte[16], 'v'
-  mov byte[18], 'e'
-  mov byte[20], ' '
-  mov byte[22], 'o'
-  mov byte[24], 'n'
-  mov byte[26], 'e'
-  mov byte[28], 's'
+  mov si, booting_message
+  call print
+
+print:
+  mov ah, 0x0e
+.next:
+  mov al, [si]
+  cmp al, 0
+  jz .end
+  int 0x10
+  inc si
+  jmp .next
+.end:
+  ret
+
+
+booting_message:
+  db "To my love ones, at the core of os", 10, 13, 0
 
   ;; 阻塞
   jmp $
