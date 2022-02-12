@@ -15,7 +15,21 @@
   ;; 0xb800 文本显示器内存区域
   mov ax, 0xb800
   mov ds, ax
-  mov byte[0], 'J'
+  mov byte[0], 'T'
+  mov byte[2], 'o'
+  mov byte[4], ' '
+  mov byte[6], 'm'
+  mov byte[8], 'y '
+  mov byte[10], ' '
+  mov byte[12], 'l'
+  mov byte[14], 'o'
+  mov byte[16], 'v'
+  mov byte[18], 'e'
+  mov byte[20], ' '
+  mov byte[22], 'o'
+  mov byte[24], 'n'
+  mov byte[26], 'e'
+  mov byte[28], 's'
 
   ;; 阻塞
   jmp $
