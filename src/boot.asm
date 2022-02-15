@@ -112,7 +112,7 @@ read_disk:
 
 
 booting_message:
-  db "To my love ones, at the core of OS", 10, 13, 0
+  db "To my love ones, at the core of OS ==== Booting JAHA-OS", 10, 13, 0
 
 error:
   mov si, .msg
