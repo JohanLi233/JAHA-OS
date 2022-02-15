@@ -74,7 +74,7 @@ error:
   jmp $
   .msg db "Loading Error", 10, 13, 0
 
-[bits 64]
+[bits 32]
 protect_mode:
   mov ax, data_selector
   mov ds, ax
@@ -86,7 +86,81 @@ protect_mode:
   mov esp, 0x13140; 修改栈顶
   ;; J & S
 
-jmp $; 阻塞
+  mov edi, 0x13140
+  mov ecx, 10
+  mov bl, 200
+
+  call read_disk
+  jmp dword code_selector:0x13140
+
+  ud2
+
+read_disk:
+  ;; 设置读写扇区数量
+  mov dx, 0x1f2
+  mov al, bl
+  out dx, al
+
+  inc dx
+  mov al, cl                    ;起始扇区的前八位
+  out dx, al
+
+  inc dx
+  shr ecx, 8
+  mov al, cl                    ;起始扇区中八位
+  out dx, al
+
+  inc dx
+  shr ecx, 8
+  mov al, ch                    ;起始扇区高八位
+  out dx, al
+
+  inc dx
+  shr ecx, 8
+  and cl, 0b1111                ;将高四位设为0
+
+  mov al, 0b1110_0000
+  or al, cl
+  out dx, al
+
+  inc dx
+  mov al, 0x20
+  out dx, al
+
+  xor ecx, ecx
+  mov cl, bl
+
+  .read:
+    push cx
+    call .wait
+    call .reads
+    pop cx
+    loop .read
+
+  ret
+
+  .wait:
+    mov dx, 0x1f7
+    .check:
+       in al, dx
+       jmp $+2
+       jmp $+2
+       and al, 0b1000_1000
+       cmp al, 0b0000_1000
+       jnz .check
+  ret
+
+  .reads:
+    mov dx, 0x1f0
+    mov cx, 256
+    .readw:
+      in ax, dx
+      jmp $+2
+      jmp $+2
+      mov [edi], ax
+      add edi, 2
+      loop .readw
+  ret
 
 code_selector equ (1 << 3)
 data_selector equ (2 << 3)
