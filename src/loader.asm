@@ -32,7 +32,7 @@ detect_memory:
   jmp prepare_protected_mode
 
 prepare_protected_mode:
-  cli                           ; 关闭中断
+  cli; 关闭中断
 
   ; 打开 A20 线
   in al,  0x92
@@ -41,12 +41,12 @@ prepare_protected_mode:
 
   lgdt [gdt_ptr]; 加载 gdt
 
-  ;; 启动保护模式
+  ; 启动保护模式
   mov eax, cr0
   or eax, 1
   mov cr0, eax
 
-  ;; 用跳转来刷新缓存，启用保护模式
+  ; 用跳转来刷新缓存，启用保护模式
   jmp dword code_selector:protect_mode
 
 print:
@@ -76,30 +76,32 @@ error:
 
 [bits 32]
 protect_mode:
-  mov ax, data_selector
-  mov ds, ax
-  mov es, ax
-  mov fs, ax
-  mov gs, ax
-  mov ss, ax
+    mov ax, data_selector
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax; 初始化段寄存器
 
-  mov esp, 0x13140
+    mov esp, 0x10000; 修改栈顶
 
-  mov byte [0xb8000], 'J'
+    mov byte [0xb8000], 'J'
 
-  mov byte [0xb8001], 'S'
+    mov byte [0xb8002], 'S'
 
-jmp $
+jmp $; 阻塞
 
 code_selector equ (1 << 3)
 data_selector equ (2 << 3)
 
-memory_base equ 0               ;内存开始位置，基地址
-memory_limit equ ((1024 * 1024 * 1024 * 4) / (1024 * 4)) ;内存界限 4G / 4k - 1
+memory_base equ 0; 内存开始的位置：基地址
+
+; 内存界限 4G / 4K - 1
+memory_limit equ ((1024 * 1024 * 1024 * 4) / (1024 * 4)) - 1
 
 gdt_ptr:
-  dw (gdt_end - gdt_base) - 1
-  dd gdt_base
+    dw (gdt_end - gdt_base) - 1
+    dd gdt_base
 gdt_base:
     dd 0, 0; NULL 描述符
 gdt_code:
