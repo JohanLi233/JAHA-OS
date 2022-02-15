@@ -13,7 +13,7 @@ $(BUILD)/kernel/%.o: $(SRC)/kernel/%.asm
 
 $(BUILD)/kernel.bin: $(BUILD)/kernel/start.o
 	$(shell mkdir -p $(dir $@))
-	ld -m elf_i386 -static $^ -o $@ -Ttext $(ENTRYPOINT)
+	ld -m elf_i386 -s $^ -o $@ -Ttext $(ENTRYPOINT)
 
 $(BUILD)/system.bin: $(BUILD)/kernel.bin
 	objcopy -O binary $< $@
