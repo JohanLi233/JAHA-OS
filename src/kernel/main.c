@@ -1,7 +1,7 @@
 #include <JAHA_OS/JAHA_OS.h>
 
 int magic = JAHA_MAGIC;
-char message[] = "Hello";
+char message[] = "Hello my";
 
 void kernel_init()
 {
