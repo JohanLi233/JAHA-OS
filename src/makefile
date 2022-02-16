@@ -4,6 +4,13 @@ SRC:=.
 ENTRYPOINT:=0x13140
 
 CFLAGS:= -m32
+CFLAGS+= -fno-builtin
+CFLAGS+= -nostdinc
+CFLAGS+= -fno-pic
+CFLAGS+= -fno-pie
+CFLAGS+= -nostdlib
+CFLAGS+= -fno-stack-protector
+CFLAGS:=$(strip ${CFLAGS})
 
 DEBUG:= -g
 INCLUDE:= -I$(SRC)/include
