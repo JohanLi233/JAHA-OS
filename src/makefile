@@ -58,3 +58,24 @@ clean:
 .PHONY: bochs
 bochs: $(BUILD)/master.img
 	bochs -q
+
+.PHONY: qemu
+qemu: $(BUILD)/master.img
+	qemu-system-i386 \
+	-m 32M \
+	-boot c \
+	-hda $<
+
+.PHONY: qemug
+qemug: $(BUILD)/master.img
+	qemu-system-i386 \
+	-s -S \
+	-m 32M \
+	-boot c \
+	-hda $<
+
+$(BUILD)/master.vmdk: $(BUILD)/master.img
+	qemu-img convert -pO vmdk $< $@
+
+.PHONY: vmdk
+vmdk: $(BUILD)/master.vmdk
