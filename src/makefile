@@ -28,8 +28,11 @@ $(BUILD)/kernel/%.o: $(SRC)/kernel/%.c
 	$(shell mkdir -p $(dir $@))
 	gcc $(CFLAGS) $(DEBUG) $(INCLUDE) -c $< -o $@
 
-$(BUILD)/kernel.bin: $(BUILD)/kernel/start.o \
-	$(BUILD)/kernel/main.o
+$(BUILD)/kernel.bin: \
+	$(BUILD)/kernel/start.o \
+	$(BUILD)/kernel/main.o \
+	$(BUILD)/kernel/io.o
+
 	$(shell mkdir -p $(dir $@))
 	ld -m elf_i386 -s $^ -o $@ -Ttext $(ENTRYPOINT)
 

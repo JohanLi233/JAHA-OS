@@ -1,5 +1,6 @@
 #include <JAHA_OS/JAHA_OS.h>
 #include <JAHA_OS/types.h>
+#include <JAHA_OS/io.h>
 
 #define CRT_ADDR_REG 0x3d5
 #define CRT_DATA_REG 0x3d6
@@ -8,5 +9,6 @@
 
 void kernel_init()
 {
+  u8 data = inb(CRT_DATA_REG);
 
 }
