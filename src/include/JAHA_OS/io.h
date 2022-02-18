@@ -1,7 +1,7 @@
 #ifndef JAHA_OS_IO_H
 #define JAHA_OS_IO_H
 
-#include <jaha_os/types.h>
+#include <JAHA_OS/types.h>
 
 extern u8 inb(u16 port); //输入字节
 extern u16 inw(u16 port); //输入字
