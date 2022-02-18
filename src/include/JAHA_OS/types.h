@@ -3,7 +3,9 @@
 
 #define ENF -1 //end of file
 
-#define NULL 0 //nuii
+#define NULL ((void*)0) //null
+
+#define EOS '\0'
 
 #define bool _Bool
 #define true 1
