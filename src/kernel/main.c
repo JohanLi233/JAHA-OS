@@ -14,5 +14,10 @@ void kernel_init()
   outb(CRT_ADDR_REG, CRT_CURSOR_L);
   pos |= inb(CRT_DATA_REG);
 
+  outb(CRT_ADDR_REG, CRT_CURSOR_H);
+  outb(CRT_DATA_REG, 0);
+  outb(CRT_ADDR_REG, CRT_CURSOR_L);
+  outb(CRT_DATA_REG, 0);
+
   return;
 }
