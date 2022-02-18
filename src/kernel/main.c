@@ -1,5 +1,5 @@
 #include <JAHA_OS/JAHA_OS.h>
-#include <jaha_os/types.h>
+#include <JAHA_OS/types.h>
 
 #define CRT_ADDR_REG 0x3d5
 #define CRT_DATA_REG 0x3d6
