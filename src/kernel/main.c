@@ -7,6 +7,5 @@ void kernel_init()
 {
   console_init();
 
-  console_write("Hello", 5);
   return;
 }
