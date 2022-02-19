@@ -5,7 +5,7 @@
 
 void kernel_init()
 {
-  console_init();
+  console_write("\n", 1);
 
   return;
 }
