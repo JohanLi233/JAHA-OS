@@ -33,7 +33,7 @@ static u32 screen; // 当前显示器开始的内存位置
 
 static u32 pos; // 记录当前光标的内存位置
 
-static x, y; // 当前光标的坐标
+static u32 x, y; // 当前光标的坐标
 
 static u8 attr = 7;        // 字符样式
 static u16 erase = 0x0720; // 空格
@@ -211,5 +211,6 @@ void console_write(char *buf, u32 count)
 
 void console_init()
 {
-    console_clear();
+  get_cursor();
+  set_cursor();
 }
